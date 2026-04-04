@@ -3,7 +3,6 @@
 import { Box, Title, Text } from "@mantine/core";
 import { BaleCatalogFilters } from "./BaleCatalogFilters";
 import { BaleCatalogGrid } from "./BaleCatalogGrid";
-import { WHOLESALE_FABRICS } from "@/data/wholeSaleFabric";
 import { useBaleCatalogStore } from "@/stores/useBaleCatalogStore";
 import { useMemo } from "react";
 import type { FabricCatalogItem } from "@/types/fabricCatalog";
