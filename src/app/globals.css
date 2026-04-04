@@ -1,0 +1,79 @@
+@import "tailwindcss";
+
+:root {
+  --background: #0b0b0b;
+  --background-dim: #121212;
+  --background-card: #151515;
+  --foreground: #ffffff;        /* Spec: White for typography */
+  --secondary-text: #9a9a9a;   /* Warm Taupe */
+  --accent: #c5a059;
+  --accent-soft: #d4b468;
+  --accent-strong: #8c7335;
+  --glass-surface: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --input-border: #333;
+  --section-padding-block: 5em;
+  --section-padding-inline: 5%;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-background-dim: var(--background-dim);
+  --color-background-card: var(--background-card);
+  --color-foreground: var(--foreground);
+  --color-secondary-text: var(--secondary-text);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-strong: var(--accent-strong);
+  --color-glass-surface: var(--glass-surface);
+  --color-glass-border: var(--glass-border);
+  --color-input-border: var(--input-border);
+  --font-sans: var(--font-inter);
+  --font-serif: var(--font-playfair-display);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-inter), "Inter", system-ui, sans-serif;
+  text-rendering: optimizeLegibility;
+}
+
+/* Login / gate glass panel */
+.glass-panel-auth {
+  background: rgba(26, 26, 26, 0.4);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+.text-shadow-gold {
+  text-shadow: 0 0 20px rgba(194, 163, 91, 0.2);
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+/* Dark autofill for login inputs */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px #11100e inset !important;
+  -webkit-text-fill-color: white !important;
+  transition: background-color 5000s ease-in-out 0s;
+}

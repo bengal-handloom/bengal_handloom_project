@@ -1,0 +1,46 @@
+.slideContainer{
+    overflow: hidden;
+    width: 100%;
+    white-space: nowrap;
+    height: 48px;
+    background-color: var(--white);
+    position: relative;
+    .slideText{
+        display: inline-block;
+        position: absolute;
+        color: black;
+        animation: marquee 40s linear infinite;
+        top:25%;
+        transform: translateY(-50%);
+        @keyframes marquee {
+          from {
+            transform: translateX(0%);
+          }
+          to {
+            transform: translateX(-50%);
+          }
+        }
+    }
+    .slideText2{
+      display: inline-block;
+      position: absolute;
+      color: black;
+      animation: marquee 20s linear infinite;
+      top:25%;
+      left:100%;
+      transform: translate(-50%, -50%);
+      @keyframes marquee2 {
+        from {
+          transform: translateX(50%);
+        }
+        to {
+          transform: translateX(-200%);
+        }
+      }
+  }
+
+
+    
+      
+}
+
