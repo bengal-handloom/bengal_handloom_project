@@ -71,12 +71,12 @@ export async function POST(req: NextRequest) {
       const nameTrim = input.name.trim();
 
       try {
-        const metadata_ref = adminDb.collection("metadata")
-        const fabric_meta_snap =  await metadata_ref.doc("fabrics").get()
+        const metadata_ref = adminDb.collection("metadata").doc("fabrics")
+        const fabric_meta_snap =  await metadata_ref.get()
         const fabric_metadata =  fabric_meta_snap.data() as string[]
 
         if(!fabric_metadata.some(e=>e===row.collection_type)){
-          await ref.set(firestoreDataFromInput(input, true));
+          await metadata_ref.set(firestoreDataFromInput(input, true));
 
         }
         const snap = await adminDb
