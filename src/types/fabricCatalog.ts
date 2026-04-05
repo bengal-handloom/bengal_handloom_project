@@ -2,13 +2,12 @@ export type CapacityStatus = "normal" | "low" | "high";
 
 export type FabricCatalogItem = {
   id: string;
+  sku: string;
   imageLargeUrl: string;
   imageSmallUrl: string;
   name: string;
   location: string;
   pricePerMeter: number;
-  weightPercent: number;
-  softnessPercent: number;
   gsm: string;
   region: string;
   availableMeters: number;
@@ -29,12 +28,11 @@ export type FabricCatalogItem = {
 export type FabricCatalogInput = {
   imageLargeUrl: string;
   imageSmallUrl: string;
+  sku: string;
   name: string;
   location: string;
   artisanKey?: string | null;
   pricePerMeter: number;
-  weightPercent: number;
-  softnessPercent: number;
   gsm: string;
   region: string;
   availableMeters: number;

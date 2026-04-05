@@ -10,13 +10,12 @@ const MAX_ROWS = 10_000;
 
 /** Match import-csv column names so round-trip works */
 const HEADERS = [
+  "sku",
   "name",
   "imageLargeUrl",
   "imageSmallUrl",
   "location",
   "pricePerMeter",
-  "weightPercent",
-  "softnessPercent",
   "gsm",
   "region",
   "artisanKey",
@@ -36,13 +35,12 @@ function escapeCell(value: string): string {
 
 function itemToRow(f: FabricCatalogItem): string {
   const cells = [
+    f.sku,
     f.name,
     f.imageLargeUrl,
     f.imageSmallUrl,
     f.location,
     String(f.pricePerMeter),
-    String(f.weightPercent),
-    String(f.softnessPercent),
     f.gsm,
     f.region,
     f.artisanKey,

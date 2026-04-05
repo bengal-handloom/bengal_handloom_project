@@ -143,24 +143,7 @@ export default function FormFields({ form, setForm }: { form: FabricCatalogInput
           classNames={{ input: "bg-[#171717] border-[#3a3a3a]" }}
         />
       </Group>
-      <Group grow>
-        <NumberInput
-          label="Weight %"
-          min={0}
-          max={100}
-          value={form.weightPercent}
-          onChange={(v) => setForm((f) => ({ ...f, weightPercent: typeof v === "number" ? v : 0 }))}
-          classNames={{ input: "bg-[#171717] border-[#3a3a3a]" }}
-        />
-        <NumberInput
-          label="Softness %"
-          min={0}
-          max={100}
-          value={form.softnessPercent}
-          onChange={(v) => setForm((f) => ({ ...f, softnessPercent: typeof v === "number" ? v : 0 }))}
-          classNames={{ input: "bg-[#171717] border-[#3a3a3a]" }}
-        />
-      </Group>
+
       <Group grow>
         <TextInput
           label="GSM"

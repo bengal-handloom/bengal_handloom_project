@@ -1,20 +1,26 @@
 import { create } from "zustand";
-import type { OriginFilter, ViewMode } from "@/types/wholesale";
+import type { ViewMode } from "@/types/wholesale";
 
 interface CatalogState {
   searchQuery: string;
-  originFilter: OriginFilter;
+  /** Empty string = all regions */
+  catalogRegion: string;
+  /** Empty string = all locations */
+  catalogLocation: string;
   viewMode: ViewMode;
   setSearchQuery: (q: string) => void;
-  setOriginFilter: (origin: OriginFilter) => void;
+  setCatalogRegion: (region: string) => void;
+  setCatalogLocation: (location: string) => void;
   setViewMode: (mode: ViewMode) => void;
 }
 
 export const useCatalogStore = create<CatalogState>((set) => ({
   searchQuery: "",
-  originFilter: "all",
+  catalogRegion: "",
+  catalogLocation: "",
   viewMode: "grid",
   setSearchQuery: (searchQuery) => set({ searchQuery }),
-  setOriginFilter: (originFilter) => set({ originFilter }),
+  setCatalogRegion: (catalogRegion) => set({ catalogRegion, catalogLocation: "" }),
+  setCatalogLocation: (catalogLocation) => set({ catalogLocation }),
   setViewMode: (viewMode) => set({ viewMode }),
 }));

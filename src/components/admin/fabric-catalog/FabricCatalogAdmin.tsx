@@ -24,8 +24,6 @@ const EMPTY: FabricCatalogInput = {
   name: "",
   location: "",
   pricePerMeter: 0,
-  weightPercent: 0,
-  softnessPercent: 0,
   gsm: "",
   artisanKey: "",
   region: "",
@@ -60,8 +58,6 @@ function itemToInput(item: FabricCatalogItem): FabricCatalogInput {
     name: item.name,
     location: item.location,
     pricePerMeter: item.pricePerMeter,
-    weightPercent: item.weightPercent,
-    softnessPercent: item.softnessPercent,
     gsm: item.gsm,
     artisanKey: item.artisanKey ?? null,
 
@@ -630,8 +626,6 @@ export function FabricCatalogAdmin() {
             <DetailRow label="Location" value={viewItem.location} />
             <DetailRow label="Region" value={viewItem.region} />
             <DetailRow label="Price per meter" value={String(viewItem.pricePerMeter)} />
-            <DetailRow label="Weight %" value={String(viewItem.weightPercent)} />
-            <DetailRow label="Softness %" value={String(viewItem.softnessPercent)} />
             <DetailRow label="GSM" value={viewItem.gsm} />
             <DetailRow label="Available meters" value={String(viewItem.availableMeters)} />
             <DetailRow label="Collection type" value={viewItem.collectionType} />

@@ -1,62 +1,103 @@
 "use client";
 
-import { Group, Button, Text, Box, UnstyledButton } from "@mantine/core";
-import type { OriginFilter } from "@/types/wholesale";
+import { Group, Button, Text, Box, UnstyledButton, Select } from "@mantine/core";
 import { useCatalogStore } from "@/stores/useCatalogStores";
-
-const ORIGINS: { value: OriginFilter; label: string }[] = [
-  { value: "all", label: "All Origins" },
-  { value: "West Bengal", label: "West Bengal" },
-  { value: "Jaipur", label: "Jaipur" },
-  { value: "Varanasi", label: "Varanasi" },
-];
+import { useCatalogMetadata } from "@/hooks/useCatalogMetadata";
+import { allLocationsSorted } from "@/lib/catalogMetadata";
 
 interface CatalogFiltersBarProps {
   showingCount: number;
   totalCount: number;
+  /** When set, collection is fixed (e.g. dynamic collection page) */
+  fixedCollectionType?: string;
 }
 
-export function CatalogFiltersBar({ showingCount, totalCount }: CatalogFiltersBarProps) {
-  const originFilter = useCatalogStore((s) => s.originFilter);
-  const setOriginFilter = useCatalogStore((s) => s.setOriginFilter);
+export function CatalogFiltersBar({
+  showingCount,
+  totalCount,
+  fixedCollectionType,
+}: CatalogFiltersBarProps) {
+  const { metadata, loading: metaLoading } = useCatalogMetadata();
+  const catalogRegion = useCatalogStore((s) => s.catalogRegion);
+  const setCatalogRegion = useCatalogStore((s) => s.setCatalogRegion);
+  const catalogLocation = useCatalogStore((s) => s.catalogLocation);
+  const setCatalogLocation = useCatalogStore((s) => s.setCatalogLocation);
   const viewMode = useCatalogStore((s) => s.viewMode);
   const setViewMode = useCatalogStore((s) => s.setViewMode);
+
+  const locationData =
+    catalogRegion && metadata?.locationsByRegion[catalogRegion]?.length
+      ? ["", ...metadata.locationsByRegion[catalogRegion]]
+      : ["", ...allLocationsSorted(metadata?.locationsByRegion ?? {})];
+
+  const locationSelectData = locationData.map((loc) => ({
+    value: loc,
+    label: loc === "" ? "All locations" : loc,
+  }));
 
   return (
     <Box className="sticky top-16 z-40 border-b border-[#2a2a2a] bg-[#0B0B0B]/95 px-6 py-4 backdrop-blur-sm lg:px-12">
       <Group justify="space-between" wrap="wrap" className="mx-auto max-w-[1400px] gap-4">
-        <Group gap="xs" wrap="nowrap" className="overflow-x-auto pb-1 md:pb-0">
-          {ORIGINS.map(({ value, label }) => (
-            <Button
-              key={value}
-              size="sm"
-              variant={originFilter === value ? "filled" : "default"}
-              color={originFilter === value ? "gold" : "dark"}
-              className={
-                originFilter === value
-                  ? "whitespace-nowrap rounded-lg bg-[#C5A059] text-black font-semibold"
-                  : "whitespace-nowrap rounded-lg border border-[#2a2a2a] bg-[#141414] text-white transition-colors hover:border-[#C5A059]/50"
-              }
-              onClick={() => setOriginFilter(value)}
-            >
-              {value === "all" ? label : (
-                <>
-                  {label}
-                  <span className="material-symbols-outlined text-base">expand_more</span>
-                </>
-              )}
-            </Button>
-          ))}
-          <Box className="mx-2 h-6 w-px bg-[#2a2a2a]" />
-          <Button
-            size="sm"
-            variant="default"
-            className="whitespace-nowrap rounded-lg border border-[#2a2a2a] bg-[#141414] text-white hover:border-[#C5A059]/50"
-          >
-            <span className="material-symbols-outlined text-base">filter_list</span>
-            More Filters
-          </Button>
-        </Group>
+        <Box className="flex min-w-0 flex-1 flex-col gap-3">
+          {fixedCollectionType ? (
+            <Text size="sm" className="text-[#C5A059]">
+              Collection: <span className="font-semibold text-white">{fixedCollectionType}</span>
+            </Text>
+          ) : null}
+          {metaLoading ? (
+            <Text size="sm" className="text-[#9d9589]">
+              Loading filters…
+            </Text>
+          ) : (
+            <>
+              <Group gap="xs" wrap="wrap" className="overflow-x-auto pb-1 md:pb-0">
+                <Button
+                  size="sm"
+                  variant={catalogRegion === "" ? "filled" : "default"}
+                  color={catalogRegion === "" ? "gold" : "dark"}
+                  className={
+                    catalogRegion === ""
+                      ? "whitespace-nowrap rounded-lg bg-[#C5A059] text-black font-semibold"
+                      : "whitespace-nowrap rounded-lg border border-[#2a2a2a] bg-[#141414] text-white transition-colors hover:border-[#C5A059]/50"
+                  }
+                  onClick={() => setCatalogRegion("")}
+                >
+                  All regions
+                </Button>
+                {(metadata?.regions ?? []).map((r) => (
+                  <Button
+                    key={r}
+                    size="sm"
+                    variant={catalogRegion === r ? "filled" : "default"}
+                    color={catalogRegion === r ? "gold" : "dark"}
+                    className={
+                      catalogRegion === r
+                        ? "whitespace-nowrap rounded-lg bg-[#C5A059] text-black font-semibold"
+                        : "whitespace-nowrap rounded-lg border border-[#2a2a2a] bg-[#141414] text-white transition-colors hover:border-[#C5A059]/50"
+                    }
+                    onClick={() => setCatalogRegion(r)}
+                  >
+                    {r}
+                  </Button>
+                ))}
+              </Group>
+              <Select
+                size="sm"
+                label="Location"
+                placeholder="All locations"
+                data={locationSelectData}
+                value={catalogLocation}
+                onChange={(v) => setCatalogLocation(v ?? "")}
+                clearable
+                classNames={{
+                  input: "bg-[#141414] border-[#2a2a2a] text-white",
+                  label: "text-[#bdb29e] text-xs",
+                }}
+                className="max-w-xs"
+              />
+            </>
+          )}
+        </Box>
         <Group gap="xs" className="text-sm text-[#bdb29e]">
           <Text size="sm">
             Showing <span className="font-bold text-white">{showingCount}</span> of {totalCount} fabrics

@@ -42,8 +42,6 @@ export function mapFabricCatalogItemPublic(raw: FabricCatalogItem): FabricCatalo
     ...enrichBase(raw),
     pricePerMeter: 0,
     gsm: "",
-    weightPercent: 0,
-    softnessPercent: 0,
     pricingVisible: false,
   };
 }

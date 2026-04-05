@@ -43,7 +43,7 @@ export async function GET() {
 
   try {
     const coll = adminDb.collection(FABRICS_COLLECTION);
-    const snap = await coll.orderBy("createdAt", "desc").limit(MAX).get();
+    const snap = await coll.orderBy("sku", "asc").limit(MAX).get();
     const raw = snap.docs.map((doc) => fabricItemFromDoc(doc.id, doc.data()));
 
     const fabrics =

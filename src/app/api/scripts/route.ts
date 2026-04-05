@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 // init app same as firebaseAdmin.ts
 
-const ADMIN_EMAIL = "admin@bengalihandloom.ca"; // or pass argv
+const ADMIN_EMAIL = "info@bengalhandloom.ca"; // or pass argv
 
 export async function POST(req: NextRequest) {
   const user = await adminAuth.getUserByEmail(ADMIN_EMAIL);

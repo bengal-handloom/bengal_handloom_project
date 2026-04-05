@@ -1,12 +1,33 @@
 "use client";
 
 import { Box, Text } from "@mantine/core";
+import { useMemo } from "react";
 import { CatalogFiltersBar } from "@/components/catalog/CatalogFiltersBar";
 import { WholesaleFabricGrid } from "@/components/catalog/WholesaleFabricGrid";
 import { useCatalogFabrics } from "@/hooks/useCatalogFabrics";
+import { useCatalogStore } from "@/stores/useCatalogStores";
+import { filterCatalogFabrics } from "@/lib/filterCatalogFabrics";
 
-export function CatalogClientSection() {
+interface CatalogClientSectionProps {
+  fixedCollectionType?: string;
+}
+
+export function CatalogClientSection({ fixedCollectionType }: CatalogClientSectionProps) {
   const { fabrics, loading, error } = useCatalogFabrics();
+  const searchQuery = useCatalogStore((s) => s.searchQuery);
+  const catalogRegion = useCatalogStore((s) => s.catalogRegion);
+  const catalogLocation = useCatalogStore((s) => s.catalogLocation);
+
+  const filtered = useMemo(
+    () =>
+      filterCatalogFabrics(fabrics, {
+        searchQuery,
+        region: catalogRegion,
+        location: catalogLocation,
+        collectionType: fixedCollectionType,
+      }),
+    [fabrics, searchQuery, catalogRegion, catalogLocation, fixedCollectionType],
+  );
 
   if (loading) {
     return (
@@ -26,8 +47,12 @@ export function CatalogClientSection() {
 
   return (
     <>
-      <CatalogFiltersBar showingCount={fabrics.length} totalCount={fabrics.length} />
-      <WholesaleFabricGrid fabrics={fabrics} />
+      <CatalogFiltersBar
+        showingCount={filtered.length}
+        totalCount={fabrics.length}
+        fixedCollectionType={fixedCollectionType}
+      />
+      <WholesaleFabricGrid fabrics={filtered} />
     </>
   );
 }

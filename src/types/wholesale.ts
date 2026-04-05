@@ -9,9 +9,6 @@ export interface BaleLine {
 export const INDIAN_STATES = [
   "All States",
   "West Bengal",
-  "Jaipur",
-  "Varanasi",
-  "Murshidabad",
   "Andhra Pradesh",
   "Gujarat",
   "Maharashtra",
@@ -32,7 +29,6 @@ export interface ClothAvailableRange {
   max: number;
 }
 
-export type OriginFilter = "all" | "West Bengal" | "Jaipur" | "Varanasi";
 
 export type ViewMode = "grid" | "list";
 

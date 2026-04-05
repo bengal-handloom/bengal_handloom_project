@@ -85,26 +85,6 @@ export function WholesaleFabricCard({ fabric }: WholesaleFabricCardProps) {
             Artisan history →
           </Link>
         )}
-        <Box className="space-y-1.5 border-y border-[#2a2a2a] py-2">
-          <Group gap="xs" className="text-xs">
-            <span className="w-16 text-[#bdb29e]">Softness</span>
-            <Progress
-              value={fabric.softnessPercent}
-              size="xs"
-              color="gray"
-              className="flex-1"
-            />
-          </Group>
-          <Group gap="xs" className="text-xs">
-            <span className="w-16 text-[#bdb29e]">Structure</span>
-            <Progress
-              value={fabric.weightPercent}
-              size="xs"
-              color="gray"
-              className="flex-1"
-            />
-          </Group>
-        </Box>
         <Box className="flex flex-col gap-3">
           <Box className="flex flex-col gap-1">
             <Group justify="space-between" className="mb-1 text-xs">

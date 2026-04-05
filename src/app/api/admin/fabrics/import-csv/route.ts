@@ -7,12 +7,14 @@ import {
   parseFabricInput,
   firestoreDataFromInput,
 } from "@/lib/fabricCatalogFirestore";
+import admin from "firebase-admin";
+import { MetaData } from "@/types/metadata";
 
 export const runtime = "nodejs";
 
 const MAX_BYTES = 5 * 1024 * 1024; // 5MB
 
-type RowResult = { row: number; name: string; action: "created" | "updated" | "error"; message?: string };
+type RowResult = { row: number; sku: string; action: "created" | "updated" | "error"; message?: string };
 
 export async function POST(req: NextRequest) {
   const gate = await requireAdminApi();
@@ -45,13 +47,12 @@ export async function POST(req: NextRequest) {
       const row = records[i];
 
       const body = {
+        sku: row.sku ?? row.sku ?? "",
         name: row.name ?? row.Name ?? "",
         imageLargeUrl: row.imageLargeUrl ?? row.image_large_url ?? "",
         imageSmallUrl: row.imageSmallUrl ?? row.image_small_url ?? "",
         location: row.location ?? "",
         pricePerMeter: row.pricePerMeter ?? row.price_per_meter ?? "",
-        weightPercent: row.weightPercent ?? row.weight_percent ?? "",
-        softnessPercent: row.softnessPercent ?? row.softness_percent ?? "",
         gsm: row.gsm ?? "",
         artisanKey: row.artisanKey ?? "",
         region: row.region ?? "",
@@ -63,42 +64,73 @@ export async function POST(req: NextRequest) {
 
       const parsed = parseFabricInput(body);
       if (!parsed.ok) {
-        results.push({ row: rowNum, name: String(body.name), action: "error", message: parsed.error });
+        results.push({ row: rowNum, sku: String(body.sku), action: "error", message: parsed.error });
         continue;
       }
 
       const input = parsed.value;
-      const nameTrim = input.name.trim();
+      const skuTrim = input.sku.trim();
 
       try {
-        const metadata_ref = adminDb.collection("metadata").doc("fabrics")
-        const fabric_meta_snap =  await metadata_ref.get()
-        const fabric_metadata =  fabric_meta_snap.data() as string[]
-
-        if(!fabric_metadata.some(e=>e===row.collection_type)){
-          await metadata_ref.set(firestoreDataFromInput(input, true));
-
+        const metadata_ref = adminDb.collection("metadata").doc("v0");
+        const fabric_meta_snap = await metadata_ref.get();
+        const raw = fabric_meta_snap.data() as Partial<MetaData> | undefined;
+        const existingTypes = raw?.fabrics?.all_collection_types;
+        const types = Array.isArray(existingTypes) ? existingTypes : [];
+        if (row.collectionType && !types.some((e) => e === row.collectionType)) {
+          await metadata_ref.set(
+            { fabrics: { all_collection_types: admin.firestore.FieldValue.arrayUnion(row.collectionType) } },
+            { merge: true },
+          );
         }
+        const regionKey = (row.region ?? "").trim();
+        const loc = (row.location ?? "").trim();
+        if (regionKey && loc) {
+          const regionMap =
+            raw?.region && typeof raw.region === "object" && !Array.isArray(raw.region)
+              ? (raw.region as Record<string, unknown>)
+              : {};
+          const locs = Array.isArray(regionMap[regionKey])
+            ? (regionMap[regionKey] as string[])
+            : [];
+          if (!locs.some((e) => e === loc)) {
+            try {
+              await metadata_ref.update({
+                [`region.${regionKey}`]: admin.firestore.FieldValue.arrayUnion(loc),
+              });
+            } catch {
+              await metadata_ref.set(
+                {
+                  region: { [regionKey]: admin.firestore.FieldValue.arrayUnion(loc) },
+                  fabrics: { all_collection_types: types.length ? types : [] },
+                },
+                { merge: true },
+              );
+            }
+          }
+        }
+
         const snap = await adminDb
           .collection(FABRICS_COLLECTION)
-          .where("name", "==", nameTrim)
+          .where("sku", "==", skuTrim)
           .limit(1)
           .get();
 
         if (snap.empty) {
-          const ref = adminDb.collection(FABRICS_COLLECTION).doc();
+          const ref = adminDb.collection(FABRICS_COLLECTION).doc(skuTrim);
           await ref.set(firestoreDataFromInput(input, true));
           created++;
-          results.push({ row: rowNum, name: nameTrim, action: "created" });
+          results.push({ row: rowNum, sku: skuTrim, action: "created" });
         } else {
           const doc = snap.docs[0];
           await doc.ref.update(firestoreDataFromInput(input, false));
           updated++;
-          results.push({ row: rowNum, name: nameTrim, action: "updated" });
+          results.push({ row: rowNum, sku: skuTrim, action: "updated" });
         }
       } catch (e) {
         const msg = e instanceof Error ? e.message : "Write failed";
-        results.push({ row: rowNum, name: nameTrim, action: "error", message: msg });
+        console.log(e)
+        results.push({ row: rowNum, sku: skuTrim, action: "error", message: msg });
       }
     }
 

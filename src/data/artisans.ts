@@ -29,10 +29,62 @@ export type Artisan = {
   
   export const ARTISANS: Artisan[] = [
     {
-      key: "asansol_khadi_workers",
+      key: "bengal_khadi_samiti",
       seriesLabel: "HERITAGE SERIES",
-      name: "Asansol Khadi Workers",
-      location: "Asansol, West Bengal",
+      name: "Bengal Khadi Samit",
+      location: "Kolkata, West Bengal",
+      badge: "HANDSPUN COLLECTIVE",
+      quote: "Every thread carries the memory of my father's hands.",
+      heroImageUrl:
+        "https://images.unsplash.com/photo-1520975869010-94fefb66a5b0?w=2000&q=80",
+      portraitImageUrl:
+        "https://images.unsplash.com/photo-1520975919018-7d0c85d8cdbf?w=1200&q=80",
+      intro:
+        "For over a century, these hands have shaped khadi into cloth that breathes with patience—handspun, handwoven, and quietly radical.",
+      metrics: [
+        { label: "Technique", value: "Hand-spun Khadi" },
+        { label: "Legacy", value: "100+ Years" },
+      ],
+      timeline: [
+        {
+          year: "1924",
+          title: "The Foundation",
+          body: "A small spinning circle becomes a cooperative—passing craft through families and apprentices.",
+        },
+        {
+          year: "1960",
+          title: "The Golden Expansion",
+          body: "Local demand grows; looms multiply. Natural fibers and disciplined finishing define the signature handfeel.",
+        },
+        {
+          year: "1995",
+          title: "Global Recognition",
+          body: "Small batches reach ateliers abroad—each meter inspected and signed off by senior weavers.",
+        },
+        {
+          year: "2024",
+          title: "The Modern Vow",
+          body: "Carbon-aware production and fair-wage commitments sustain the craft without compromising integrity.",
+        },
+      ],
+      craft: {
+        heading: "How this cloth is made",
+        bullets: [
+          "Handspun yarns for breathability and texture",
+          "Low-tension weaving to preserve natural slub",
+          "Plant-based finishing for softness without shine",
+        ],
+      },
+      gallery: [
+        "https://images.unsplash.com/photo-1520975693411-b44f5d6c62c1?w=1600&q=80",
+        "https://images.unsplash.com/photo-1520975708795-0ce7b3a8d656?w=1600&q=80",
+      ],
+    },
+    {
+      key: "chhipa_community",
+      seriesLabel: "HERITAGE SERIES",
+      name: "Chhipa Community",
+      location: "Kolkata, West Bengal",
       badge: "HANDSPUN COLLECTIVE",
       quote: "Every thread carries the memory of my father's hands.",
       heroImageUrl:
