@@ -41,7 +41,6 @@ export function mapFabricCatalogItemPublic(raw: FabricCatalogItem): FabricCatalo
   return {
     ...enrichBase(raw),
     pricePerMeter: 0,
-    gsm: "",
     pricingVisible: false,
   };
 }

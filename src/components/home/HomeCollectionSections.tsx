@@ -20,12 +20,17 @@ function toHomeFabric(item: FabricCatalogItem, visibility: "public" | "full"): F
 
   return {
     id: item.id,
-    name: item.name || "Untitled Fabric",
+    name: item.name || "New Fabric",
     sku: item.id,
     price: isVisible ? `₹${item.pricePerMeter}` : "Locked",
     minYards: item.availableMeters > 0 ? `${Math.min(50, item.availableMeters)} m` : "—",
     imageUrl: toPublicUrl(item.imageSmallUrl || item.imageLargeUrl),
     badge: item.collectionType || null,
+    location: item.location,
+    gsm: item.gsm,
+    subHeader: item.subHeader,
+    region: item.region,
+    artisanKey: item.artisanKey,
     badgeVariant: premium ? "gold" : "default",
   };
 }

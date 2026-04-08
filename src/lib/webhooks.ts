@@ -1,5 +1,5 @@
 // src/lib/webhooks.ts
-const START_URL = process.env.WEBHOOK_EMAIL_START_URL!;
+const START_URL = "https://login.bizgrowww.com/api/automations/69d50463b0900/execute"!;
 const STOP_URL = process.env.WEBHOOK_EMAIL_STOP_URL!;
 
 async function postWebhook(url: string, payload: unknown) {
@@ -8,6 +8,7 @@ async function postWebhook(url: string, payload: unknown) {
     headers: { "content-type": "application/json" },
     body: JSON.stringify(payload),
   });
+  console.log(res)
 
   if (!res.ok) {
     const text = await res.text().catch(() => "");

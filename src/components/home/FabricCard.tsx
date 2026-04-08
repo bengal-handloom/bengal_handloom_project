@@ -2,6 +2,7 @@
 
 import { Box, Title, Text, Card, Group } from "@mantine/core";
 import type { Fabric } from "@/types/fabric";
+import Link from "next/link";
 
 interface FabricCardProps {
   fabric: Fabric;
@@ -42,7 +43,35 @@ export function FabricCard({ fabric }: FabricCardProps) {
             {fabric.sku}
           </Text>
         </Group>
-        
+        {fabric.subHeader?.trim() ? (
+          <Text size="sm" className="text-[#c4bdb0]">
+            {fabric.subHeader.trim()}
+          </Text>
+        ) : null}
+        <Group gap={6} wrap="wrap" className="text-[11px] uppercase tracking-wider text-gray-500">
+          {fabric.region?.trim() ? <span>{fabric.region.trim()}</span> : null}
+          {fabric.region?.trim() && fabric.location?.trim() ? <span aria-hidden>·</span> : null}
+          {fabric.location?.trim() ? <span>{fabric.location.trim()}</span> : null}
+        </Group>
+        {fabric.gsm?.trim() ? (
+          <Text size="xs" className="font-mono text-gray-400">
+            {fabric.gsm.trim()} GSM
+          </Text>
+        ) : null}
+        {/* {fabric.description?.trim() ? (
+          <Text size="sm" lineClamp={2} className="leading-snug text-gray-400">
+            {fabric.description.trim()}
+          </Text>
+        ) : null} */}
+
+        {fabric.artisanKey && (
+          <Link
+            href={`/artisans/${fabric.artisanKey}`}
+            className="text-xs font-semibold uppercase tracking-widest text-[#C5A059] hover:underline"
+          >
+            Artisan history →
+          </Link>
+        )}
         <Box className="group/lock relative cursor-pointer overflow-hidden rounded border border-[#2a2a2a] bg-[#161616] p-3 transition-colors hover:border-[#C5A059]/30">
           <Group justify="space-between" className="opacity-30 blur-[2px]">
             <Text size="sm" className="font-mono text-white">
