@@ -24,11 +24,11 @@ const EMPTY: FabricCatalogInput = {
   name: "",
   sku: "",
   location: "",
-  pricePerMeter: 0,
+  pricePerYard: 0,
   gsm: "",
   artisanKey: "",
   region: "",
-  availableMeters: 0,
+  availableYards: 0,
   subHeader: "",
   description: "",
   collectionType: "",
@@ -59,12 +59,12 @@ function itemToInput(item: FabricCatalogItem): FabricCatalogInput {
     name: item.name,
     sku: item.sku,
     location: item.location,
-    pricePerMeter: item.pricePerMeter,
+    pricePerYard: item.pricePerYard,
     gsm: item.gsm,
     artisanKey: item.artisanKey ?? null,
 
     region: item.region,
-    availableMeters: item.availableMeters,
+    availableYards: item.availableYards,
     subHeader: item.subHeader,
     description: item.description,
     collectionType: item.collectionType,
@@ -483,10 +483,10 @@ export function FabricCatalogAdmin() {
                 <th className="px-3 py-3 w-16"> </th>
                 <th className="px-4 py-3">Name</th>
                 <th className="px-4 py-3">Location</th>
-                <th className="px-4 py-3">Price / m</th>
+                <th className="px-4 py-3">Price / yd</th>
                 <th className="px-4 py-3">Region</th>
                 <th className="px-4 py-3">GSM</th>
-                <th className="px-4 py-3">Available m</th>
+                <th className="px-4 py-3">Available yd</th>
                 <th className="px-4 py-3">Collection</th>
                 <th className="px-4 py-3 w-36">Actions</th>
               </tr>
@@ -515,10 +515,10 @@ export function FabricCatalogAdmin() {
                     ) : null}
                   </td>
                   <td className="px-4 py-3 text-[#bdb29e]">{row.location || "—"}</td>
-                  <td className="px-4 py-3 text-[#bdb29e]">{row.pricePerMeter}</td>
+                  <td className="px-4 py-3 text-[#bdb29e]">{row.pricePerYard}</td>
                   <td className="px-4 py-3 text-[#bdb29e]">{row.region || "—"}</td>
                   <td className="px-4 py-3 text-[#bdb29e]">{row.gsm || "—"}</td>
-                  <td className="px-4 py-3 text-[#bdb29e]">{row.availableMeters}</td>
+                  <td className="px-4 py-3 text-[#bdb29e]">{row.availableYards}</td>
                   <td className="px-4 py-3 text-[#bdb29e]">{row.collectionType || "—"}</td>
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-1">
@@ -627,9 +627,9 @@ export function FabricCatalogAdmin() {
             <DetailRow label="Sub header" value={viewItem.subHeader} />
             <DetailRow label="Location" value={viewItem.location} />
             <DetailRow label="Region" value={viewItem.region} />
-            <DetailRow label="Price per meter" value={String(viewItem.pricePerMeter)} />
+            <DetailRow label="Price per meter" value={String(viewItem.pricePerYard)} />
             <DetailRow label="GSM" value={viewItem.gsm} />
-            <DetailRow label="Available meters" value={String(viewItem.availableMeters)} />
+            <DetailRow label="Available yards" value={String(viewItem.availableYards)} />
             <DetailRow label="Collection type" value={viewItem.collectionType} />
             <div>
               <Text size="xs" c="dimmed">

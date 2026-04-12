@@ -9,8 +9,8 @@ export type OrderStatus =
 export type OrderLineSnapshot = {
   fabricId: string;
   name: string;
-  meters: number;
-  pricePerMeter: number;
+  yards: number;
+  pricePerYard: number;
   imageSmallUrl?: string;
   imageLargeUrl?: string;
   subtotal: number;
@@ -32,7 +32,7 @@ export type OrderDTO = {
   orderNumber: string;
   status: OrderStatus;
   lines: OrderLineSnapshot[];
-  totalMeters: number;
+  totalYards: number;
   totalPrice: number;
   currency: string;
   assignedArtisan?: AssignedArtisan;

@@ -3,8 +3,8 @@ import type { FabricCatalogItem } from "@/types/fabricCatalog";
 const LOW_STOCK_M = 100;
 const HIGH_STOCK_M = 800;
 
-function capacityFromAvailable(availableMeters: number) {
-  const left = Math.max(0, availableMeters);
+function capacityFromAvailable(availableYards: number) {
+  const left = Math.max(0, availableYards);
   const total = Math.max(Math.round(left * 1.5), left, 1);
   let capacityStatus: FabricCatalogItem["capacityStatus"] = "normal";
   if (left < LOW_STOCK_M) capacityStatus = "low";
@@ -20,7 +20,7 @@ function badgeFromCollectionType(collectionType: string): FabricCatalogItem["bad
 }
 
 function enrichBase(raw: FabricCatalogItem): FabricCatalogItem {
-  const cap = capacityFromAvailable(raw.availableMeters);
+  const cap = capacityFromAvailable(raw.availableYards);
   return {
     ...raw,
     ...cap,
@@ -40,19 +40,19 @@ export function mapFabricCatalogItemFull(raw: FabricCatalogItem): FabricCatalogI
 export function mapFabricCatalogItemPublic(raw: FabricCatalogItem): FabricCatalogItem {
   return {
     ...enrichBase(raw),
-    pricePerMeter: 0,
+    pricePerYard: 0,
     pricingVisible: false,
   };
 }
 
-export function formatCatalogPricePerMeter(fabric: FabricCatalogItem): string {
+export function formatCatalogPricePerYard(fabric: FabricCatalogItem): string {
   if (fabric.pricingVisible === false) return "—";
   return new Intl.NumberFormat("en-IN", {
     style: "currency",
     currency: "INR",
     maximumFractionDigits: 0,
     minimumFractionDigits: 0,
-  }).format(fabric.pricePerMeter);
+  }).format(fabric.pricePerYard);
 }
 
 export function catalogOriginLabel(fabric: FabricCatalogItem): string {

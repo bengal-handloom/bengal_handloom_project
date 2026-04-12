@@ -6,7 +6,7 @@ import { OrbitControls } from "@react-three/drei";
 import * as THREE from "three";
 import { useBaleStore } from "@/stores/useBaleStore";
 
-const METERS_PER_PIECE = 50;
+const YARDS_PER_PIECE = 50;
 const CLOTH_HEIGHT = 0.08;
 const PALLET_HEIGHT = 0.3;
 
@@ -55,10 +55,10 @@ function hexFromImageUrl(url: string, index: number): string {
   const l = 0.35;
   const c = (1 - Math.abs(2 * l - 1)) * s;
   const x = c * (1 - Math.abs(((h * 6) % 2) - 1));
-  const m = l - c / 2;
+  const yd = l - c / 2;
   let r = 0, g = 0, b = 0;
   if (h < 1 / 6) { r = c; g = x; } else if (h < 2 / 6) { r = x; g = c; } else if (h < 3 / 6) { g = c; b = x; } else if (h < 4 / 6) { g = x; b = c; } else if (h < 5 / 6) { r = x; b = c; } else { r = c; b = x; }
-  const toHex = (n: number) => Math.round((n + m) * 255).toString(16).padStart(2, "0");
+  const toHex = (n: number) => Math.round((n + yd) * 255).toString(16).padStart(2, "0");
   return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
 }
 
@@ -68,7 +68,7 @@ export function Bale3DScene() {
     const out: { index: number; color: string; delay: number }[] = [];
     let idx = 0;
     lines.forEach((line, lineIdx) => {
-      const count = Math.floor(line.meters / METERS_PER_PIECE);
+      const count = Math.floor(line.yards / YARDS_PER_PIECE);
       const color = hexFromImageUrl(
       line.fabric.imageSmallUrl || line.fabric.imageLargeUrl,
         lineIdx

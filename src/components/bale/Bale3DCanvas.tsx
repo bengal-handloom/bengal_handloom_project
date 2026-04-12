@@ -3,11 +3,11 @@
 import dynamic from "next/dynamic";
 
 const Canvas = dynamic(
-  () => import("@react-three/fiber").then((m) => m.Canvas),
+  () => import("@react-three/fiber").then((yd) => yd.Canvas),
   { ssr: false }
 );
 
-const Bale3DScene = dynamic(() => import("./Bale3DScene").then((m) => m.Bale3DScene), {
+const Bale3DScene = dynamic(() => import("./Bale3DScene").then((yd) => yd.Bale3DScene), {
   ssr: false,
 });
 

@@ -4,7 +4,7 @@ import { Box, Title, Text, Button, Progress, Group } from "@mantine/core";
 import type { FabricCatalogItem } from "@/types/fabricCatalog";
 import { useBaleStore } from "@/stores/useBaleStore";
 import {
-  formatCatalogPricePerMeter,
+  formatCatalogPricePerYard,
   catalogOriginLabel,
   catalogGsmLabel,
 } from "@/lib/mapFabricCatalogItem";
@@ -21,18 +21,18 @@ function capacityBarColor(status: string) {
 }
 
 function capacityLabel(fabric: FabricCatalogItem) {
-  const left = fabric.capacityLeft ?? fabric.availableMeters;
+  const left = fabric.capacityLeft ?? fabric.availableYards;
   const status = fabric.capacityStatus ?? "normal";
   if (status === "low")
-    return <span className="text-red-400">Low Stock ({left}m)</span>;
-  return <span className="text-[#C5A059]">{left}m left</span>;
+    return <span className="text-red-400">Low Stock ({left}yd)</span>;
+  return <span className="text-[#C5A059]">{left}yd left</span>;
 }
 
 export function WholesaleFabricCard({ fabric }: WholesaleFabricCardProps) {
   const addToBale = useBaleStore((s) => s.addToBale);
   const items = useBaleStore((s) => s.lines);
   const isInBale = items.some((i) => i.fabric.id === fabric.id);
-  const left = fabric.capacityLeft ?? fabric.availableMeters;
+  const left = fabric.capacityLeft ?? fabric.availableYards;
   const total = Math.max(fabric.capacityTotal ?? left, 1);
   const capacityPct = (left / total) * 100;
   return (
@@ -70,8 +70,8 @@ export function WholesaleFabricCard({ fabric }: WholesaleFabricCardProps) {
             {fabric.name}
           </Title>
           <Text fw={700} size="lg" className="text-[#C5A059]">
-            {formatCatalogPricePerMeter(fabric)}
-            <span className="text-xs font-normal text-[#777]">/m</span>
+            {formatCatalogPricePerYard(fabric)}
+            <span className="text-xs font-normal text-[#777]">/yd</span>
           </Text>
         </Group>
         <Text size="sm" className="text-[#888]">

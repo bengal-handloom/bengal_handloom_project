@@ -23,7 +23,7 @@ export function orderFromDoc(id: string, d: DocumentData): OrderDTO {
     orderNumber: String(d.orderNumber ?? ""),
     status: (d.status as OrderStatus) || "admin_review",
     lines,
-    totalMeters: num(d.totalMeters),
+    totalYards: num(d.totalYards),
     totalPrice: num(d.totalPrice),
     currency: String(d.currency ?? "INR"),
     assignedArtisan: d.assignedArtisan as AssignedArtisan | undefined,
@@ -43,12 +43,12 @@ function validateLines(lines: OrderLineSnapshot[]): { ok: true } | { ok: false; 
   const byFabric: Record<string, number> = {};
   for (const l of lines) {
     if (!l.fabricId || !l.name) return { ok: false, error: "Invalid line item" };
-    if (l.meters < 50) return { ok: false, error: "Minimum 50m per line" };
-    byFabric[l.fabricId] = (byFabric[l.fabricId] ?? 0) + l.meters;
+    if (l.yards < 50) return { ok: false, error: "Minimum 50yd per line" };
+    byFabric[l.fabricId] = (byFabric[l.fabricId] ?? 0) + l.yards;
   }
-  for (const m of Object.values(byFabric)) {
-    if (m > PER_FABRIC_BALE_CAPACITY_M) {
-      return { ok: false, error: `Max ${PER_FABRIC_BALE_CAPACITY_M}m per fabric type` };
+  for (const yd of Object.values(byFabric)) {
+    if (yd > PER_FABRIC_BALE_CAPACITY_M) {
+      return { ok: false, error: `Max ${PER_FABRIC_BALE_CAPACITY_M}yd per fabric type` };
     }
   }
   return { ok: true };
@@ -63,7 +63,7 @@ export async function createOrderDoc(input: {
   const v = validateLines(input.lines);
   if (!v.ok) return v;
 
-  const totalMeters = input.lines.reduce((s, l) => s + l.meters, 0);
+  const totalYards = input.lines.reduce((s, l) => s + l.yards, 0);
   const totalPrice = input.lines.reduce((s, l) => s + l.subtotal, 0);
 
   const ref = adminDb.collection(ORDERS_COLLECTION).doc();
@@ -84,7 +84,7 @@ export async function createOrderDoc(input: {
     orderNumber,
     status: "admin_review" as OrderStatus,
     lines: input.lines,
-    totalMeters,
+    totalYards,
     totalPrice,
     currency: "INR",
     assignedArtisan: input.assignedArtisan ?? defaultArtisan,

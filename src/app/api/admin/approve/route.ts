@@ -24,7 +24,6 @@ type SignupRequestDoc = {
   expectedYardage?: string;
   preferredFabricType?: string;
   brandVision?: string;
-  businessLicense?: string;
 };
 
 export async function POST(req: NextRequest) {
@@ -123,8 +122,7 @@ export async function POST(req: NextRequest) {
 
   try {
     await triggerEmailStartWebhook({
-      requestId,
-      firebaseUid: uid,
+
       email,
       fullName: data.fullName ?? null,
       companyName: data.companyName ?? null,

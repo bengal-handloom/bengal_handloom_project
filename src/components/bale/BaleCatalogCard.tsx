@@ -3,11 +3,11 @@
 import { Box, Text, Title, Button } from "@mantine/core";
 import type { FabricCatalogItem } from "@/types/fabricCatalog";
 import { useBaleStore } from "@/stores/useBaleStore";
-import { METERS_PER_PIECE_CONST } from "@/constants/bale";
+import { YARDS_PER_PIECE_CONST } from "@/constants/bale";
 import { BaleCustomQuantityModal } from "./BaleCustomQuantityModal";
 import { useState } from "react";
 import {
-  formatCatalogPricePerMeter,
+  formatCatalogPricePerYard,
   catalogOriginLabel,
   catalogGsmLabel,
 } from "@/lib/mapFabricCatalogItem";
@@ -19,8 +19,8 @@ interface BaleCatalogCardProps {
 export function BaleCatalogCard({ fabric }: BaleCatalogCardProps) {
   const addToBale = useBaleStore((s) => s.addToBale);
   const [customOpen, setCustomOpen] = useState(false);
-  const left = fabric.capacityLeft ?? fabric.availableMeters;
-  const canAdd50 = left >= METERS_PER_PIECE_CONST && fabric.pricingVisible !== false;
+  const left = fabric.capacityLeft ?? fabric.availableYards;
+  const canAdd50 = left >= YARDS_PER_PIECE_CONST && fabric.pricingVisible !== false;
 
   return (
     <>
@@ -49,13 +49,13 @@ export function BaleCatalogCard({ fabric }: BaleCatalogCardProps) {
           <Box className="my-4 flex items-center gap-4 text-xs text-[#bdb29e]">
             <span className="flex items-center gap-1">
               <span className="material-symbols-outlined text-base">width</span>
-              {left}m left
+              {left}yd left
             </span>
           </Box>
           <Box className="mt-6 flex items-center justify-between border-t border-[#2a2a2a] pt-4">
             <Text className="text-lg font-bold text-white">
-              {formatCatalogPricePerMeter(fabric)}
-              <span className="text-xs font-normal text-[#bdb29e]">/m</span>
+              {formatCatalogPricePerYard(fabric)}
+              <span className="text-xs font-normal text-[#bdb29e]">/yd</span>
             </Text>
             <Box className="flex gap-2">
               <Button
@@ -63,9 +63,9 @@ export function BaleCatalogCard({ fabric }: BaleCatalogCardProps) {
                 disabled={!canAdd50}
                 className="rounded-lg bg-[#2a2a2a] font-bold text-white hover:bg-[#C5A059] hover:text-black"
                 leftSection={<span className="material-symbols-outlined text-lg">add</span>}
-                onClick={() => addToBale(fabric, METERS_PER_PIECE_CONST)}
+                onClick={() => addToBale(fabric, YARDS_PER_PIECE_CONST)}
               >
-                + Add 50m
+                + Add 50yd
               </Button>
               <Button
                 size="sm"
@@ -84,8 +84,8 @@ export function BaleCatalogCard({ fabric }: BaleCatalogCardProps) {
         fabric={fabric}
         opened={customOpen}
         onClose={() => setCustomOpen(false)}
-        onAdd={(meters: number) => {
-          addToBale(fabric, meters);
+        onAdd={(yards: number) => {
+          addToBale(fabric, yards);
           setCustomOpen(false);
         }}
       />

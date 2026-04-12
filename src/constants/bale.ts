@@ -1,6 +1,6 @@
 export const PER_FABRIC_BALE_CAPACITY_M = 500;
 
-export const METERS_PER_PIECE = 50;
+export const YARDS_PER_PIECE = 50;
 
 
-export const METERS_PER_PIECE_CONST = METERS_PER_PIECE;
+export const YARDS_PER_PIECE_CONST = YARDS_PER_PIECE;

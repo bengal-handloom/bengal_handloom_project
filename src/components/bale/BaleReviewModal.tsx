@@ -3,13 +3,13 @@
 import { Box, Button, Text, Alert } from "@mantine/core";
 import { useBaleStore } from "@/stores/useBaleStore";
 import type { BaleLine } from "@/types/wholesale";
-import { formatCatalogPricePerMeter } from "@/lib/mapFabricCatalogItem";
+import { formatCatalogPricePerYard } from "@/lib/mapFabricCatalogItem";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 function getLineSubtotal(line: BaleLine): number {
   if (line.fabric.pricingVisible === false) return 0;
-  return line.fabric.pricePerMeter * line.meters;
+  return line.fabric.pricePerYard * line.yards;
 }
 
 const IMPACT_GREEN = "#3D5A4C";
@@ -33,7 +33,7 @@ export function BaleReviewModal({ opened, onClose }: BaleReviewModalProps) {
 
   const lines = useBaleStore((s) => s.lines);
   const estimatedValue = useBaleStore((s) => s.estimatedValue());
-  const totalMeters = useBaleStore((s) => s.totalMeters());
+  const totalYards = useBaleStore((s) => s.totalYards());
 
   const clearBale = useBaleStore((s) => s.clearBale);
   const baleReviewModalDisclosure = useBaleStore(
@@ -57,8 +57,8 @@ export function BaleReviewModal({ opened, onClose }: BaleReviewModalProps) {
           lines: lines.map((line) => ({
             fabricId: line.fabric.id,
             name: line.fabric.name,
-            meters: line.meters,
-            pricePerMeter: line.fabric.pricePerMeter,
+            yards: line.yards,
+            pricePerYard: line.fabric.pricePerYard,
             imageSmallUrl: line.fabric.imageSmallUrl,
             imageLargeUrl: line.fabric.imageLargeUrl,
             subtotal: getLineSubtotal(line),
@@ -167,7 +167,7 @@ export function BaleReviewModal({ opened, onClose }: BaleReviewModalProps) {
 
                 <Text size="sm" className="mt-1 text-white/60">
                   {lines.length} fabric{lines.length !== 1 ? "s" : ""} ·{" "}
-                  {totalMeters.toFixed(0)}m total
+                  {totalYards.toFixed(0)}yd total
                 </Text>
               </Box>
             </Box>
@@ -238,16 +238,16 @@ export function BaleReviewModal({ opened, onClose }: BaleReviewModalProps) {
                             {line.fabric.name}
                           </Text>
                           <Text size="xs" className="sm:hidden text-white/40">
-                            {formatCatalogPricePerMeter(line.fabric)}/m
+                            {formatCatalogPricePerYard(line.fabric)}/yd
                           </Text>
                         </td>
 
                         <td className="px-5 py-4 text-right text-white/70">
-                          {line.meters}m
+                          {line.yards}yd
                         </td>
 
                         <td className="hidden px-5 py-4 text-right text-white/70 sm:table-cell">
-                          {formatCatalogPricePerMeter(line.fabric)}
+                          {formatCatalogPricePerYard(line.fabric)}
                         </td>
 
                         <td className="px-5 py-4 text-right font-medium text-white">

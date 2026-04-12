@@ -11,7 +11,7 @@ interface BaleCustomQuantityModalProps {
   fabric: FabricCatalogItem;
   opened: boolean;
   onClose: () => void;
-  onAdd: (meters: number) => void;
+  onAdd: (yards: number) => void;
 }
 
 export function BaleCustomQuantityModal({
@@ -20,10 +20,10 @@ export function BaleCustomQuantityModal({
   onClose,
   onAdd,
 }: BaleCustomQuantityModalProps) {
-  const maxM = fabric.capacityLeft ?? fabric.availableMeters;
-  const [meters, setMeters] = useState(MIN_M);
+  const maxM = fabric.capacityLeft ?? fabric.availableYards;
+  const [yards, setYards] = useState(MIN_M);
 
-  const clamped = Math.min(maxM, Math.max(MIN_M, Math.round(meters / STEP) * STEP));
+  const clamped = Math.min(maxM, Math.max(MIN_M, Math.round(yards / STEP) * STEP));
   const pieces = Math.floor(clamped / 50);
 
   return (
@@ -41,29 +41,29 @@ export function BaleCustomQuantityModal({
     >
       <Box className="space-y-4">
         <Text size="sm" className="text-[#bdb29e]">
-          Available: {maxM}m. 1 cloth piece = 50m.
+          Available: {maxM}yd. 1 cloth piece = 50yd.
         </Text>
         <NumberInput
-          label="Meters"
+          label="Yards"
           placeholder="e.g. 200"
           min={MIN_M}
           max={maxM}
           step={STEP}
-          value={meters}
-          onChange={(v) => setMeters(Number(v) || MIN_M)}
+          value={yards}
+          onChange={(v) => setYards(Number(v) || MIN_M)}
           classNames={{
             input: "bg-[#222] border-[#2a2a2a] text-white rounded-lg",
           }}
         />
         <Text size="sm" className="text-[#bdb29e]">
-          {clamped}m → {pieces} cloth piece{pieces !== 1 ? "s" : ""} on the bale.
+          {clamped}yd → {pieces} cloth piece{pieces !== 1 ? "s" : ""} on the bale.
         </Text>
         <Button
           fullWidth
           className="rounded-lg bg-[#C5A059] font-bold text-black hover:bg-[#d4b468]"
           onClick={() => onAdd(clamped)}
         >
-          Add {clamped}m to bale
+          Add {clamped}yd to bale
         </Button>
       </Box>
     </Modal>

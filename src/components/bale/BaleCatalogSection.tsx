@@ -21,10 +21,10 @@ function filterFabrics(
   return fabrics.filter((f) => {
     if (stateFilter !== "All States" && f.location !== stateFilter) return false;
     if (f.pricingVisible !== false) {
-      const price = f.pricePerMeter;
+      const price = f.pricePerYard;
       if (price < priceRange.min || price > priceRange.max) return false;
     }
-    const left = f.capacityLeft ?? f.availableMeters;
+    const left = f.capacityLeft ?? f.availableYards;
     if (left < clothRange.min || left > clothRange.max) return false;
     return true;
   });

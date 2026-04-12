@@ -46,20 +46,20 @@ function parseLinesFromBody(body: unknown): { ok: true; lines: OrderLineSnapshot
     const row = item as Record<string, unknown>;
     const fabricId = String(row.fabricId ?? "").trim();
     const name = String(row.name ?? "").trim();
-    const meters = typeof row.meters === "number" ? row.meters : Number(row.meters);
-    const pricePerMeter = typeof row.pricePerMeter === "number" ? row.pricePerMeter : Number(row.pricePerMeter);
+    const yards = typeof row.yards === "number" ? row.yards : Number(row.yards);
+    const pricePerYard = typeof row.pricePerYard === "number" ? row.pricePerYard : Number(row.pricePerYard);
 
     if (!fabricId || !name) return { ok: false, error: "fabricId and name are required per line" };
-    if (!Number.isFinite(meters) || !Number.isFinite(pricePerMeter)) return { ok: false, error: "Invalid meters or pricePerMeter" };
-    if (meters < 50) return { ok: false, error: "Minimum 50m per line" };
-    if (pricePerMeter < 0) return { ok: false, error: "Invalid pricePerMeter" };
+    if (!Number.isFinite(yards) || !Number.isFinite(pricePerYard)) return { ok: false, error: "Invalid yards or pricePerYard" };
+    if (yards < 50) return { ok: false, error: "Minimum 50yd per line" };
+    if (pricePerYard < 0) return { ok: false, error: "Invalid pricePerYard" };
 
-    const subtotal = Math.round(meters * pricePerMeter * 100) / 100;
+    const subtotal = Math.round(yards * pricePerYard * 100) / 100;
     lines.push({
       fabricId,
       name,
-      meters,
-      pricePerMeter,
+      yards,
+      pricePerYard,
       imageSmallUrl: row.imageSmallUrl != null ? String(row.imageSmallUrl) : undefined,
       imageLargeUrl: row.imageLargeUrl != null ? String(row.imageLargeUrl) : undefined,
       subtotal,

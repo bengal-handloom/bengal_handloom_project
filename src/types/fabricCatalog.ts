@@ -7,10 +7,10 @@ export type FabricCatalogItem = {
   imageSmallUrl: string;
   name: string;
   location: string;
-  pricePerMeter: number;
+  pricePerYard: number;
   gsm: string;
   region: string;
-  availableMeters: number;
+  availableYards: number;
   subHeader: string;
   description: string;
   collectionType: string;
@@ -32,10 +32,10 @@ export type FabricCatalogInput = {
   name: string;
   location: string;
   artisanKey?: string | null;
-  pricePerMeter: number;
+  pricePerYard: number;
   gsm: string;
   region: string;
-  availableMeters: number;
+  availableYards: number;
   subHeader: string;
   description: string;
   collectionType: string;

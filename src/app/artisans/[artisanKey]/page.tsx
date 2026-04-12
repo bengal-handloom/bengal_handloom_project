@@ -60,10 +60,10 @@ export default async function ArtisanHistoryPage({ params }: PageProps) {
             </Text>
 
             <Box className="mt-7 flex flex-wrap gap-3">
-              {artisan.metrics.map((m) => (
-                <Box key={m.label} className="rounded-lg border border-[#2a2a2a] bg-[#0f0f0f] px-4 py-3">
-                  <Text className="text-[10px] font-semibold uppercase tracking-widest text-white/40">{m.label}</Text>
-                  <Text className="mt-1 text-sm font-semibold text-white">{m.value}</Text>
+              {artisan.metrics.map((yd) => (
+                <Box key={yd.label} className="rounded-lg border border-[#2a2a2a] bg-[#0f0f0f] px-4 py-3">
+                  <Text className="text-[10px] font-semibold uppercase tracking-widest text-white/40">{yd.label}</Text>
+                  <Text className="mt-1 text-sm font-semibold text-white">{yd.value}</Text>
                 </Box>
               ))}
             </Box>

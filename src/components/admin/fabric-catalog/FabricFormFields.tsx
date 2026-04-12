@@ -131,15 +131,15 @@ export default function FormFields({ form, setForm }: { form: FabricCatalogInput
           label="Price per meter"
           min={0}
           decimalScale={2}
-          value={form.pricePerMeter}
-          onChange={(v) => setForm((f) => ({ ...f, pricePerMeter: typeof v === "number" ? v : 0 }))}
+          value={form.pricePerYard}
+          onChange={(v) => setForm((f) => ({ ...f, pricePerYard: typeof v === "number" ? v : 0 }))}
           classNames={{ input: "bg-[#171717] border-[#3a3a3a]" }}
         />
         <NumberInput
-          label="Available meters"
+          label="Available yards"
           min={0}
-          value={form.availableMeters}
-          onChange={(v) => setForm((f) => ({ ...f, availableMeters: typeof v === "number" ? v : 0 }))}
+          value={form.availableYards}
+          onChange={(v) => setForm((f) => ({ ...f, availableYards: typeof v === "number" ? v : 0 }))}
           classNames={{ input: "bg-[#171717] border-[#3a3a3a]" }}
         />
       </Group>

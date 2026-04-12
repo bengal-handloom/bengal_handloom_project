@@ -7,25 +7,25 @@ import { useMemo, useState } from "react";
 import { PER_FABRIC_BALE_CAPACITY_M } from "@/constants/bale";
 
 export function BaleStageActions() {
-  const totalMeters = useBaleStore((s) => s.totalMeters());
+  const totalYards = useBaleStore((s) => s.totalYards());
   const totalPieces = useBaleStore((s) => s.totalPieces());
   const lines = useBaleStore((s) => s.lines);
   const baleReviewModalDisclosure = useBaleStore((s) => s.baleReviewModalDisclosure);
 
   const fabricCapacityRows = useMemo(() => {
-    const byId = new Map<string, { name: string; meters: number }>();
+    const byId = new Map<string, { name: string; yards: number }>();
     for (const line of lines) {
       const id = line.fabric.id;
       const prev = byId.get(id);
-      if (prev) prev.meters += line.meters;
-      else byId.set(id, { name: line.fabric.name, meters: line.meters });
+      if (prev) prev.yards += line.yards;
+      else byId.set(id, { name: line.fabric.name, yards: line.yards });
     }
-    return Array.from(byId.entries()).map(([fabricId, { name, meters }]) => ({
+    return Array.from(byId.entries()).map(([fabricId, { name, yards }]) => ({
       fabricId,
       name,
-      meters,
-      remaining: Math.max(0, PER_FABRIC_BALE_CAPACITY_M - meters),
-      pct: Math.min(100, (meters / PER_FABRIC_BALE_CAPACITY_M) * 100),
+      yards,
+      remaining: Math.max(0, PER_FABRIC_BALE_CAPACITY_M - yards),
+      pct: Math.min(100, (yards / PER_FABRIC_BALE_CAPACITY_M) * 100),
     }));
   }, [lines]);
 
@@ -36,8 +36,8 @@ export function BaleStageActions() {
         <Box className="grid grid-cols-3 gap-4 border-b border-[#2a2a2a] pb-4">
           <Box>
             <Text className="text-2xl font-bold text-white">
-              {totalMeters.toFixed(0)}
-              <span className="ml-1 text-sm font-normal text-[#bdb29e]">m</span>
+              {totalYards.toFixed(0)}
+              <span className="ml-1 text-sm font-normal text-[#bdb29e]">yd</span>
             </Text>
             <Text size="xs" className="uppercase tracking-wider text-[#bdb29e]">
               Net length
@@ -67,21 +67,21 @@ export function BaleStageActions() {
           <Text className="text-sm font-medium text-white">Per-fabric bale capacity</Text>
           {fabricCapacityRows.length === 0 ? (
             <Text size="sm" className="text-[#bdb29e]">
-              Add fabrics from the catalog. Each fabric type can hold up to {PER_FABRIC_BALE_CAPACITY_M}m in this bale.
+              Add fabrics from the catalog. Each fabric type can hold up to {PER_FABRIC_BALE_CAPACITY_M}yd in this bale.
             </Text>
           ) : (
-            fabricCapacityRows.map(({ fabricId, name, meters, remaining, pct }) => (
+            fabricCapacityRows.map(({ fabricId, name, yards, remaining, pct }) => (
               <Box key={fabricId} className="space-y-2">
                 <Box className="flex justify-between gap-2 text-sm">
                   <Text className="min-w-0 flex-1 truncate font-medium text-white" title={name}>
                     {name}
                   </Text>
                   <Text className="shrink-0 font-bold text-[#C5A059]">
-                    {meters.toFixed(0)}m / {PER_FABRIC_BALE_CAPACITY_M}m
+                    {yards.toFixed(0)}yd / {PER_FABRIC_BALE_CAPACITY_M}yd
                   </Text>
                 </Box>
                 <Text size="xs" className="text-[#bdb29e]">
-                  {remaining.toFixed(0)}m more can be added for this fabric
+                  {remaining.toFixed(0)}yd more can be added for this fabric
                 </Text>
                 <Box className="h-2 w-full overflow-hidden rounded-full bg-[#2a2a2a]">
                   <Box

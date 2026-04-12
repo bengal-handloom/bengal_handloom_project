@@ -3,7 +3,7 @@ import type { FabricCatalogItem } from "@/types/fabricCatalog";
 export interface BaleLine {
   lineId: string;
   fabric: FabricCatalogItem;
-  meters: number;
+  yards: number;
 }
 
 export const INDIAN_STATES = [

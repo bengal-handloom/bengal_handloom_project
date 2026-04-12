@@ -70,7 +70,7 @@ export function BaleCatalogFilters({ hidePriceFilter }: BaleCatalogFiltersProps)
       <Box className="flex items-center gap-2">
         <NumberInput
           size="xs"
-          placeholder="Min m"
+          placeholder="Min yd"
           min={0}
           value={clothRange.min || ""}
           onChange={(v) => setClothRange({ ...clothRange, min: Number(v) || 0 })}
@@ -79,7 +79,7 @@ export function BaleCatalogFilters({ hidePriceFilter }: BaleCatalogFiltersProps)
         <span className="text-[#bdb29e]">–</span>
         <NumberInput
           size="xs"
-          placeholder="Max m"
+          placeholder="Max yd"
           min={0}
           value={clothRange.max === 10000 ? "" : clothRange.max}
           onChange={(v) => setClothRange({ ...clothRange, max: Number(v) || 10000 })}

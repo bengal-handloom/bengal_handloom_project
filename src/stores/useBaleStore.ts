@@ -1,11 +1,11 @@
 import { create } from "zustand";
 import type { BaleLine } from "@/types/wholesale";
 import type { FabricCatalogItem } from "@/types/fabricCatalog";
-import { METERS_PER_PIECE, PER_FABRIC_BALE_CAPACITY_M } from "@/constants/bale";
+import { YARDS_PER_PIECE, PER_FABRIC_BALE_CAPACITY_M } from "@/constants/bale";
 
 
 function capacityLeft(f: FabricCatalogItem): number {
-  return f.capacityLeft ?? f.availableMeters;
+  return f.capacityLeft ?? f.availableYards;
 }
 
 function generateLineId(fabricId: string, index: number): string {
@@ -16,10 +16,10 @@ interface BaleState {
   lines: BaleLine[];
   reviewModalOpen: boolean;
   baleReviewModalDisclosure: (isOpen: boolean) => void;
-  addToBale: (fabric: FabricCatalogItem, meters: number) => void;
+  addToBale: (fabric: FabricCatalogItem, yards: number) => void;
   removeFromBale: (lineId: string) => void;
   clearBale: () => void;
-  totalMeters: () => number;
+  totalYards: () => number;
   totalPieces: () => number;
   estimatedValue: () => number;
   lastAddedLineId: string | null;
@@ -36,19 +36,19 @@ export const useBaleStore = create<BaleState>((set, get) => ({
     })
   },
 
-  addToBale: (fabric, meters) => {
+  addToBale: (fabric, yards) => {
     if (fabric.pricingVisible === false) return;
     const cap = capacityLeft(fabric);
     const state = get();
     const alreadyForFabric = state.lines
       .filter((l) => l.fabric.id === fabric.id)
-      .reduce((sum, l) => sum + l.meters, 0);
+      .reduce((sum, l) => sum + l.yards, 0);
     const roomInBale = Math.max(0, PER_FABRIC_BALE_CAPACITY_M - alreadyForFabric);
-    const clamped = Math.min(meters, cap, roomInBale);
+    const clamped = Math.min(yards, cap, roomInBale);
     if (clamped < 50) return;
     const sameFabricCount = state.lines.filter((l) => l.fabric.id === fabric.id).length;
     const lineId = generateLineId(fabric.id, sameFabricCount);
-    const line: BaleLine = { lineId, fabric, meters: clamped };
+    const line: BaleLine = { lineId, fabric, yards: clamped };
     set({
       lines: [...state.lines, line],
       lastAddedLineId: lineId,
@@ -63,12 +63,12 @@ export const useBaleStore = create<BaleState>((set, get) => ({
 
   clearBale: () => set({ lines: [], lastAddedLineId: null }),
 
-  totalMeters: () => get().lines.reduce((sum, l) => sum + l.meters, 0),
-  totalPieces: () => Math.floor(get().totalMeters() / METERS_PER_PIECE),
+  totalYards: () => get().lines.reduce((sum, l) => sum + l.yards, 0),
+  totalPieces: () => Math.floor(get().totalYards() / YARDS_PER_PIECE),
   estimatedValue: () =>
     get().lines.reduce((sum, l) => {
       if (l.fabric.pricingVisible === false) return sum;
-      return sum + l.fabric.pricePerMeter * l.meters;
+      return sum + l.fabric.pricePerYard * l.yards;
     }, 0),
 
   setLastAddedLineId: (id) => set({ lastAddedLineId: id }),
