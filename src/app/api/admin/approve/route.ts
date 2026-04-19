@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { FieldValue } from "firebase-admin/firestore";
 import { adminAuth, adminDb } from "@/lib/firebaseAdmin";
 import { requireAdminApi } from "@/lib/requireAdmin";
-import { triggerEmailStartWebhook } from "@/lib/webhooks";
+import { postWebhook, WEBHOOK_ID } from "@/lib/webhooks";
 
 export const runtime = "nodejs";
 
@@ -113,21 +113,24 @@ export async function POST(req: NextRequest) {
   }
 
   let passwordResetLink: string;
+  const actionCodeSettings = {
+    url: 'https://bengalhandloom.ca/login',
+    handleCodeInApp: true 
+  };
   try {
-    passwordResetLink = await adminAuth.generatePasswordResetLink(email);
+    passwordResetLink = await adminAuth.generatePasswordResetLink(email, actionCodeSettings);
   } catch (err) {
     console.error("[admin/approve] generatePasswordResetLink", err);
     passwordResetLink = "";
   }
 
   try {
-    await triggerEmailStartWebhook({
-
+    await postWebhook(WEBHOOK_ID.REGISTRATION_APPROVED,{
       email,
       fullName: data.fullName ?? null,
       companyName: data.companyName ?? null,
-      temporaryPassword,
-      passwordResetLink: passwordResetLink || null,
+      '{%contact.temp_pass%}': temporaryPassword,
+      '{%contact.reset_link%}': passwordResetLink || null,
     });
   } catch (err) {
     console.error("[admin/approve] webhook", err);

@@ -1,7 +1,6 @@
 // src/app/api/auth/session/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import { adminAuth } from "@/lib/firebaseAdmin";
-import { triggerEmailStopWebhook } from "@/lib/webhooks";
 import { db } from "@/lib/firebaseClient";
 import { doc, getDoc } from "firebase/firestore";
 import { cookies } from "next/headers";
@@ -34,13 +33,13 @@ export async function POST(req: NextRequest) {
     maxAge: 5 * 24 * 60 * 60,
   });
 
-  // Webhook #2 close nurturing sequence
-  await triggerEmailStopWebhook({
-    requestId: user.requestId,
-    firebaseUid: uid,
-    email: user.email,
-  });
+  // // Webhook #2 close nurturing sequence
+  // await triggerEmailStopWebhook({
+  //   requestId: user.requestId,
+  //   firebaseUid: uid,
+  //   email: user.email,
+  // });
 
-  const redirectTo = user.mustChangePassword ? "/change-password" : "/catalog";
+  const redirectTo = "/catalog";
   return NextResponse.json({ redirectTo });
 }

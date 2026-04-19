@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { FieldValue } from "firebase-admin/firestore";
 import { adminDb } from "@/lib/firebaseAdmin";
-import { triggerEmailStartWebhook } from "@/lib/webhooks";
+import { postWebhook, WEBHOOK_ID } from "@/lib/webhooks";
 
 export const runtime = 'nodejs'; 
 
@@ -66,7 +66,7 @@ export async function POST(req: NextRequest) {
       updatedAt: FieldValue.serverTimestamp(),
     });
 
-    await triggerEmailStartWebhook({
+    await postWebhook(WEBHOOK_ID.REGISTRATION_SUCCESSFUL,{
 
       email,
       fullName: fullName ?? null,
