@@ -50,10 +50,12 @@ export function LoginForm() {
       if (!res.ok) {
         throw new Error(data?.error || "Login failed.");
       }
+
       const next = searchParams.get("next");
-      const safeNext =
-        next && next.startsWith("/") && !next.startsWith("//") ? next : null;
-      router.push(safeNext ?? data?.redirectTo ?? "/catalog");
+      const safeNext = next && next.startsWith("/") && !next.startsWith("//") ? next : null;
+
+      // Unified fallback entry
+      router.push(safeNext ?? data?.redirectTo ?? "/");
     } catch (err: unknown) {
       const message =
         err && typeof err === "object" && "code" in err
@@ -69,7 +71,6 @@ export function LoginForm() {
 
   return (
     <>
-      {/* Background layer */}
       <Box className="absolute inset-0 z-0">
         <Box
           className="absolute inset-0 scale-105 bg-cover bg-center"
@@ -93,7 +94,6 @@ export function LoginForm() {
           className="glass-panel-auth w-full max-w-[500px] overflow-hidden rounded-lg border border-white/5 duration-700 ease-out animate-fade-in-up relative group"
           style={{ animationDuration: "0.8s" }}
         >
-          {/* Card header */}
           <Stack gap="xs" align="center" className="px-10 pt-12 pb-2 text-center">
             <Box className="mb-6 text-[#C5A059]/80 animate-pulse" style={{ animationDuration: "3000ms" }}>
               <span className="material-symbols-outlined text-[40px]">diamond</span>
@@ -112,7 +112,6 @@ export function LoginForm() {
             </Text>
           </Stack>
 
-          {/* Form */}
           <Box component="form" onSubmit={handleSubmit} className="flex flex-col gap-5 px-10 pt-8 pb-10">
             {errorMsg && (
               <Alert color="red" variant="light">
@@ -190,14 +189,12 @@ export function LoginForm() {
             </Stack>
           </Box>
 
-          {/* Bottom gradient line */}
           <Box
             className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#C5A059]/30 to-transparent"
             aria-hidden
           />
         </Box>
 
-        {/* Footer */}
         <Box className="absolute bottom-6 flex gap-4 font-sans text-[10px] tracking-widest uppercase text-white/10">
           <span>© 2024 The Atelier</span>
           <span>•</span>

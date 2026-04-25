@@ -43,6 +43,6 @@ export async function POST(req: NextRequest) {
   //   email: user.email,
   // });
 
-  const redirectTo = "/catalog";
+  const redirectTo = "/";
   return NextResponse.json({ redirectTo });
 }

@@ -1,4 +1,5 @@
-import { Box } from "@mantine/core";
+import Link from "next/link";
+import { Box, Container, Group, Button } from "@mantine/core";
 import { VerifiedHeader } from "@/components/catalog/VerifiedHeader";
 import { VerifiedHeroSection } from "@/components/catalog/VerifiedHeroSection";
 import { BaleFloatingBar } from "@/components/catalog/BaleFloatingBar";
@@ -27,11 +28,22 @@ export default async function CollectionTypeCatalogPage({ params }: PageProps) {
 
       <Box component="main" className="flex-1 pb-32">
         <VerifiedHeroSection
-          eyebrow="Wholesale Exclusive"
+          eyebrow="Collection"
           headline={collectionType}
-          subtitle="Curated artisanal weaves for the modern atelier."
+          subtitle="Browse this collection and return to all collections anytime."
           backgroundImageUrl={VERIFIED_HERO_IMAGE}
         />
+
+        <Container size="xl" className="px-6 pt-6 lg:px-12">
+          <Group>
+            <Link
+              href="/"
+              className="rounded-lg border border-[#C5A059] bg-transparent font-semibold text-[#C5A059] hover:bg-[#C5A059]/10"
+            >
+              Back to all collections
+            </Link>
+          </Group>
+        </Container>
 
         <CatalogClientSection fixedCollectionType={collectionType} />
       </Box>

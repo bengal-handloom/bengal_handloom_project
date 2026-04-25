@@ -1,10 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { Box, Title, Text, Button, Grid, Container, Group } from "@mantine/core";
+import { Box, Title, Button, Grid, Container, Group } from "@mantine/core";
 import type { FabricCatalogItem } from "@/types/fabricCatalog";
 import type { Fabric } from "@/types/fabric";
 import { FabricCard } from "@/components/home/FabricCard";
+import { WholesaleFabricCard } from "@/components/catalog/WholesaleFabricCard";
 import { encodeCollectioType } from "@/lib/catalogMetadata";
 
 const S3_PUBLIC_BASE = (process.env.NEXT_PUBLIC_AWS_S3_PUBLIC_BASE_URL || "").replace(/\/+$/, "");
@@ -22,7 +23,7 @@ function toHomeFabric(item: FabricCatalogItem, visibility: "public" | "full"): F
   return {
     id: item.id,
     name: item.name || "New Fabric",
-    sku: item.id,
+    sku: item.sku || item.id,
     price: isVisible ? `₹${item.pricePerYard}` : "Locked",
     minYards: item.availableYards > 0 ? `${Math.min(50, item.availableYards)} yd` : "—",
     imageUrl: toPublicUrl(item.imageSmallUrl || item.imageLargeUrl),
@@ -32,6 +33,7 @@ function toHomeFabric(item: FabricCatalogItem, visibility: "public" | "full"): F
     subHeader: item.subHeader,
     region: item.region,
     artisanKey: item.artisanKey,
+    pricingVisible: isVisible,
     badgeVariant: premium ? "gold" : "default",
   };
 }
@@ -57,8 +59,6 @@ export function HomeCollectionSections({
         const inCollection = fabrics.filter((f) => f.collectionType === collectionType).slice(0, 4);
         if (inCollection.length === 0) return null;
 
-        const homeFabrics = inCollection.map((f) => toHomeFabric(f, visibility));
-
         return (
           <Box key={collectionType}>
             <Container size="xl" className="px-6 lg:px-12">
@@ -76,12 +76,22 @@ export function HomeCollectionSections({
                   Show more
                 </Button>
               </Group>
+
               <Grid gutter="lg">
-                {homeFabrics.map((fabric) => (
-                  <Grid.Col key={fabric.id} span={{ base: 12, sm: 12, md: 3 }}>
-                    <FabricCard fabric={fabric} />
-                  </Grid.Col>
-                ))}
+                {visibility === "full"
+                  ? inCollection.map((fabric) => (
+                      <Grid.Col key={fabric.id} span={{ base: 12, sm: 12, md: 3 }}>
+                        <WholesaleFabricCard fabric={fabric} />
+                      </Grid.Col>
+                    ))
+                  : inCollection.map((fabric) => {
+                      const homeFabric = toHomeFabric(fabric, visibility);
+                      return (
+                        <Grid.Col key={fabric.id} span={{ base: 12, sm: 12, md: 3 }}>
+                          <FabricCard fabric={homeFabric} />
+                        </Grid.Col>
+                      );
+                    })}
               </Grid>
             </Container>
           </Box>
