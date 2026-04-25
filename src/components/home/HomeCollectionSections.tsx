@@ -5,6 +5,7 @@ import { Box, Title, Text, Button, Grid, Container, Group } from "@mantine/core"
 import type { FabricCatalogItem } from "@/types/fabricCatalog";
 import type { Fabric } from "@/types/fabric";
 import { FabricCard } from "@/components/home/FabricCard";
+import { encodeCollectioType } from "@/lib/catalogMetadata";
 
 const S3_PUBLIC_BASE = (process.env.NEXT_PUBLIC_AWS_S3_PUBLIC_BASE_URL || "").replace(/\/+$/, "");
 
@@ -36,7 +37,7 @@ function toHomeFabric(item: FabricCatalogItem, visibility: "public" | "full"): F
 }
 
 function collectionHref(collectionType: string) {
-  return `/catalog/${encodeURIComponent(collectionType)}`;
+  return `/catalog/${encodeCollectioType(collectionType)}`;
 }
 
 interface HomeCollectionSectionsProps {

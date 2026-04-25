@@ -47,9 +47,9 @@ export function mapFabricCatalogItemPublic(raw: FabricCatalogItem): FabricCatalo
 
 export function formatCatalogPricePerYard(fabric: FabricCatalogItem): string {
   if (fabric.pricingVisible === false) return "—";
-  return new Intl.NumberFormat("en-IN", {
+  return new Intl.NumberFormat("en-US", {
     style: "currency",
-    currency: "INR",
+    currency: "USD",
     maximumFractionDigits: 0,
     minimumFractionDigits: 0,
   }).format(fabric.pricePerYard);

@@ -1,6 +1,6 @@
 // src/app/api/auth/session/route.ts
 import { NextRequest, NextResponse } from "next/server";
-import { adminAuth } from "@/lib/firebaseAdmin";
+import { adminAuth, adminDb } from "@/lib/firebaseAdmin";
 import { db } from "@/lib/firebaseClient";
 import { doc, getDoc } from "firebase/firestore";
 import { cookies } from "next/headers";
@@ -15,10 +15,13 @@ export async function POST(req: NextRequest) {
   const decoded = await adminAuth.verifyIdToken(idToken);
   const uid = decoded.uid;
 
-  // Look up approval state
-  const userSnap = await getDoc(doc(db, "users", uid));
-  if (!userSnap.exists()) return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
+  console.log(decoded)
 
+  // Look up approval state
+  const userSnap = await adminDb.collection("users").doc(uid).get();
+  if (!userSnap.exists) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
+  }
   const user = userSnap.data() as any;
   if (!user.approved) return NextResponse.json({ error: "Not approved" }, { status: 403 });
 

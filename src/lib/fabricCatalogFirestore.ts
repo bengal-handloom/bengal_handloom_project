@@ -19,7 +19,7 @@ export function fabricItemFromDoc(id: string, d: DocumentData): FabricCatalogIte
     imageLargeUrl: String(d.imageLargeUrl ?? ""),
     imageSmallUrl: String(d.imageSmallUrl ?? ""),
     name: String(d.name ?? ""),
-    sku: String(d.name ?? ""),
+    sku: String(d.sku ?? id),
     location: String(d.location ?? ""),
     pricePerYard: num(d.pricePerYard),
     gsm: String(d.gsm ?? ""),

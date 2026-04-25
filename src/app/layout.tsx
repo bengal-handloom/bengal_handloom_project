@@ -17,7 +17,7 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "The Digital Loom",
+  title: "Heritage Artisan Loom",
   description: "The art of fabric, digitally woven.",
 };
 

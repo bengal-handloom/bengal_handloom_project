@@ -21,7 +21,7 @@ export function DashboardShell({ children }: { children: ReactNode }) {
           <Link href="/dashboard" className="flex items-center gap-2">
             <span className="material-symbols-outlined text-2xl text-[#C5A059]">texture</span>
             <Title order={2} className="text-lg font-semibold text-white">
-              The Digital Loom
+              Heritage Artisan Loom
             </Title>
           </Link>
           <nav className="flex flex-wrap items-center gap-6">

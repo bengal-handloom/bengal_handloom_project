@@ -22,7 +22,7 @@ export default function Home() {
             texture
           </span>
         }
-        siteName="The Digital Loom"
+        siteName="Heritage Artisan Loom"
         navItems={DEFAULT_NAV_ITEMS}
       />
 
@@ -40,7 +40,7 @@ export default function Home() {
         <LoadingMore />
 
         <CTASection
-          title="Join The Digital Loom"
+          title="Join Heritage Artisan Loom"
           description="You've reached the end of the public preview. To browse our full catalog of 500+ premium textiles and view wholesale pricing, please apply for partner access."
           buttonLabel="Apply for Membership"
           disclaimer="Requires Valid EIN / Tax ID."

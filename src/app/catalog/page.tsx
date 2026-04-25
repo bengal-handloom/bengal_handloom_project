@@ -14,7 +14,7 @@ export default function CatalogPage() {
     <Box className="relative flex min-h-screen flex-col overflow-x-hidden bg-[#0B0B0B] font-sans text-[#bdb29e] antialiased selection:bg-[#C5A059] selection:text-black">
       <VerifiedHeader
         logo={<span className="material-symbols-outlined text-3xl text-[#C5A059]">texture</span>}
-        siteName="The Digital Loom"
+        siteName="Heritage Artisan Loom"
         navItems={VERIFIED_NAV_ITEMS}
         profileImageUrl={PROFILE_IMAGE}
       />

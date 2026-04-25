@@ -77,3 +77,11 @@ export function orderedCollectionTypes(
   }
   return out;
 }
+
+export function decodeCollectionType (encoded: string){
+  return decodeURIComponent(encoded).split("_").join(" ")
+}
+
+export function encodeCollectioType(collection_type: string){
+  return encodeURIComponent(collection_type.split(" ").join("_"))
+}

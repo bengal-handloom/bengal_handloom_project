@@ -11,7 +11,7 @@ export default function BaleBuilderPage() {
     <Box className="min-h-screen bg-[#0B0B0B] font-sans text-[#bdb29e] antialiased">
       <VerifiedHeader
         logo={<span className="material-symbols-outlined text-3xl text-[#C5A059]">deployed_code</span>}
-        siteName="The Digital Loom"
+        siteName="Heritage Artisan Loom"
         navItems={[{ label: "Catalog", href: "/catalog" }, ...VERIFIED_NAV_ITEMS]}
         profileImageUrl={PROFILE_IMAGE}
       />
