@@ -36,9 +36,9 @@ export type Artisan = {
       badge: "HANDSPUN COLLECTIVE",
       quote: "Every thread carries the memory of my father's hands.",
       heroImageUrl:
-        "https://images.unsplash.com/photo-1520975869010-94fefb66a5b0?w=2000&q=80",
+        "https://digital-loom.s3.ap-south-1.amazonaws.com/assets/artisan/community/bengal_khadi_samity/artist_1.png",
       portraitImageUrl:
-        "https://images.unsplash.com/photo-1520975919018-7d0c85d8cdbf?w=1200&q=80",
+        "https://digital-loom.s3.ap-south-1.amazonaws.com/assets/artisan/community/bengal_khadi_samity/artist_1.png",
       intro:
         "For over a century, these hands have shaped khadi into cloth that breathes with patience—handspun, handwoven, and quietly radical.",
       metrics: [
@@ -76,8 +76,8 @@ export type Artisan = {
         ],
       },
       gallery: [
-        "https://images.unsplash.com/photo-1520975693411-b44f5d6c62c1?w=1600&q=80",
-        "https://images.unsplash.com/photo-1520975708795-0ce7b3a8d656?w=1600&q=80",
+        "https://digital-loom.s3.ap-south-1.amazonaws.com/assets/artisan/community/bengal_khadi_samity/artist_3.png",
+        "https://digital-loom.s3.ap-south-1.amazonaws.com/assets/artisan/community/bengal_khadi_samity/artist_3.png",
       ],
     },
     {

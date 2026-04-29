@@ -70,7 +70,7 @@ export async function POST(req: NextRequest) {
 
       email,
       fullName: fullName ?? null,
-      companyName: companyName ?? null,
+      "{%company.name%}": companyName ?? null,
     });
 
     return NextResponse.json({ ok: true, requestId: docRef.id }, { status: 201 });

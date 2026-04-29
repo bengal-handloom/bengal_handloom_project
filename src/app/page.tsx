@@ -9,8 +9,9 @@ import { DEFAULT_NAV_ITEMS } from "@/data/navigation";
 import { VERIFIED_NAV_ITEMS } from "@/data/verifiedNav"; // keep exact filename casing
 import { HomeCatalogSection } from "@/components/home/HomeCatalogSection";
 import { getOptionalVerifiedSession } from "@/lib/getOptionalSession";
+import HERO_IMAGE from "@/assets/heritage_collection_image.png"
 
-const HERO_IMAGE = "https://lh3.googleusercontent.com/aida-public/AB6AXuC_nxCNaMhd9AYNGq-Ib6fYjov5Iqhx7LY4B0z9qfyhPXXn0ospSnHdpW_oHMy0oS8Fk1lCya9CDH1KJZ1FU651WqMgxjBdeXrIY8zquy7vI8_r9gYlhXqFdavTne_MuWvo02_DJgnouVWfiNGwkLrb4cx54X28YrRX-xV5x-LmYZctGwSUqmRHIGG6HzzpDvxh5aI_0JklkV1-ljUytILQPxEm1Ci-DfkmBpVjztiNPald1GoIa3KXmRGaipY-Pq4kcUEwVh6GREPA";
+
 const CTA_BG_IMAGE = "https://images.unsplash.com/photo-1615873968403-89e068629265?q=80&w=2832&auto=format&fit=crop";
 const PROFILE_IMAGE = "https://lh3.googleusercontent.com/aida-public/AB6AXuCNIH-MWRYBI2sO5s41kK_EVUoOI_9jFW3XPQrTeLEnohw1BETES228GcY8LlG3Z7pQ0mRaB2m0ixLoYXdcg_m6I0bPycVqKfp2vpV2y3tuxDkEipaViHX2eEqqBjs7jy4hkh6jjYhiNCRW77lgrNlNake3S4PSW9zyRbmZRVpYmcm4SaOxVPbYuWAG--9OFOtDPPGxgxT9sBbyO0tMLSX9Cqg2OdFXaLAYfa-1b3u73vc8kIozpVTWQCYdN3zrBU4Bn6iZeVJFq27i";
 

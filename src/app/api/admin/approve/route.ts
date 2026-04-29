@@ -128,7 +128,7 @@ export async function POST(req: NextRequest) {
     await postWebhook(WEBHOOK_ID.REGISTRATION_APPROVED,{
       email,
       fullName: data.fullName ?? null,
-      companyName: data.companyName ?? null,
+      '{%company.name%}': data.companyName ?? null,
       '{%contact.temp_pass%}': temporaryPassword,
       '{%contact.reset_link%}': passwordResetLink || null,
     });
