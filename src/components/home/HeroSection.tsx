@@ -9,7 +9,7 @@ interface HeroSectionProps {
   description: string;
   ctaLabel: string;
   ctaHref?: string;
-  backgroundImageUrl: StaticImageData;
+  backgroundImageUrl: string;
 }
 
 export function HeroSection({
@@ -24,17 +24,11 @@ export function HeroSection({
     <Box
       className="relative flex min-h-[500px] w-full flex-col items-center justify-center overflow-hidden h-[60vh]"
     >
-      <Image
-        className="absolute inset-0 z-0 bg-cover bg-center"
-
-        src={backgroundImageUrl}
-        width={backgroundImageUrl.width}
-        height={backgroundImageUrl.height}
-        alt="Background Image"
-      />
       <Box
-        className="absolute inset-0 z-10 "
-
+        className="absolute inset-0 z-0 bg-cover bg-center"
+        style={{
+          backgroundImage: `linear-gradient(rgba(11, 11, 11, 0.3), rgba(11, 11, 11, 0.8)), url("${backgroundImageUrl}")`,
+        }}
       />
       <Stack align="center" gap="md" className="relative z-10 max-w-4xl px-4 text-center">
         <Text

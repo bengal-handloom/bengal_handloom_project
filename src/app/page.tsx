@@ -9,9 +9,9 @@ import { DEFAULT_NAV_ITEMS } from "@/data/navigation";
 import { VERIFIED_NAV_ITEMS } from "@/data/verifiedNav"; // keep exact filename casing
 import { HomeCatalogSection } from "@/components/home/HomeCatalogSection";
 import { getOptionalVerifiedSession } from "@/lib/getOptionalSession";
-import HERO_IMAGE from "@/assets/heritage_collection_image.png"
 
 
+const BG_IMAGE = "https://digital-loom.s3.ap-south-1.amazonaws.com/assets/common/heritage_collection_image.png"
 const CTA_BG_IMAGE = "https://images.unsplash.com/photo-1615873968403-89e068629265?q=80&w=2832&auto=format&fit=crop";
 const PROFILE_IMAGE = "https://lh3.googleusercontent.com/aida-public/AB6AXuCNIH-MWRYBI2sO5s41kK_EVUoOI_9jFW3XPQrTeLEnohw1BETES228GcY8LlG3Z7pQ0mRaB2m0ixLoYXdcg_m6I0bPycVqKfp2vpV2y3tuxDkEipaViHX2eEqqBjs7jy4hkh6jjYhiNCRW77lgrNlNake3S4PSW9zyRbmZRVpYmcm4SaOxVPbYuWAG--9OFOtDPPGxgxT9sBbyO0tMLSX9Cqg2OdFXaLAYfa-1b3u73vc8kIozpVTWQCYdN3zrBU4Bn6iZeVJFq27i";
 
@@ -42,7 +42,7 @@ export default async function Home() {
           headline="2026 Heritage Collection"
           description="Exquisite weaves for the modern atelier. Discover textures that define the next generation of luxury."
           ctaLabel="Request Access"
-          backgroundImageUrl={HERO_IMAGE}
+          backgroundImageUrl={BG_IMAGE}
         />
 
         <HomeCatalogSection />
