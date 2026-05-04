@@ -1,5 +1,6 @@
 "use client";
 
+import { getOptionalVerifiedSession } from "@/lib/getOptionalSession";
 import { Box, Title, Text, Button, Stack } from "@mantine/core";
 import Image, { StaticImageData } from "next/image";
 
@@ -9,6 +10,7 @@ interface HeroSectionProps {
   description: string;
   ctaLabel: string;
   ctaHref?: string;
+  isVerified?: boolean;
   backgroundImageUrl: string;
 }
 
@@ -17,9 +19,11 @@ export function HeroSection({
   headline,
   description,
   ctaLabel,
+  isVerified,
   ctaHref = "#",
   backgroundImageUrl,
 }: HeroSectionProps) {
+
   return (
     <Box
       className="relative flex min-h-[500px] w-full flex-col items-center justify-center overflow-hidden h-[60vh]"
@@ -44,7 +48,7 @@ export function HeroSection({
         <Text size="lg" className="mx-auto max-w-xl font-light tracking-wide text-gray-300">
           {description}
         </Text>
-        <Button
+        {isVerified && <Button
           component="a"
           href={ctaHref}
           variant="outline"
@@ -57,7 +61,7 @@ export function HeroSection({
               arrow_forward
             </span>
           </span>
-        </Button>
+        </Button>}
       </Stack>
     </Box>
   );
