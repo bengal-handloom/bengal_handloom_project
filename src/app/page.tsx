@@ -41,8 +41,10 @@ export default async function Home() {
           eyebrow="Exclusive Wholesale Access"
           headline="2026 Heritage Collection"
           description="Exquisite weaves for the modern atelier. Discover textures that define the next generation of luxury."
-          ctaLabel="Request Access"
+          ctaLabel="Login to Access"
+          isVerified={isVerified}
           backgroundImageUrl={BG_IMAGE}
+          ctaHref="/login"
         />
 
         <HomeCatalogSection />
