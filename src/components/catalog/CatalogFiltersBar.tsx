@@ -4,6 +4,7 @@ import { Group, Button, Text, Box, UnstyledButton, Select } from "@mantine/core"
 import { useCatalogStore } from "@/stores/useCatalogStores";
 import { useCatalogMetadata } from "@/hooks/useCatalogMetadata";
 import { allLocationsSorted } from "@/lib/catalogMetadata";
+import { LoadingMore } from "../home";
 
 interface CatalogFiltersBarProps {
   showingCount: number;
@@ -45,9 +46,8 @@ export function CatalogFiltersBar({
             </Text>
           ) : null}
           {metaLoading ? (
-            <Text size="sm" className="text-[#9d9589]">
-              Loading filters…
-            </Text>
+            <LoadingMore />
+
           ) : (
             <>
               <Group gap="xs" wrap="wrap" className="overflow-x-auto pb-1 md:pb-0">

@@ -10,6 +10,7 @@ import { filterCatalogFabrics } from "@/lib/filterCatalogFabrics";
 import { orderedCollectionTypes } from "@/lib/catalogMetadata";
 import { HomeLocationFilters } from "@/components/home/HomeLocationFilters";
 import { HomeCollectionSections } from "@/components/home/HomeCollectionSections";
+import { LoadingMore } from "./LoadingMore";
 
 export function HomeCatalogSection() {
   const { fabrics, visibility, loading, error } = useCatalogFabrics();
@@ -41,9 +42,8 @@ export function HomeCatalogSection() {
       <HomeLocationFilters />
 
       {loading || metaLoading ? (
-        <Box className="px-6 py-12">
-          <Text className="text-[#9d9589]">Loading fabrics…</Text>
-        </Box>
+         <LoadingMore/>
+        
       ) : error ? (
         <Box className="px-6 py-12">
           <Text className="text-red-400">{error}</Text>

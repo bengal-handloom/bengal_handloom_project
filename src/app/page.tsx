@@ -49,7 +49,6 @@ export default async function Home() {
 
         <HomeCatalogSection />
 
-        {!isVerified && <LoadingMore />}
 
         {!isVerified && (
           <CTASection
